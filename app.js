@@ -11,7 +11,7 @@ app.get('/api', (req, res) => {
     })
 })
 
-app.post('/api/posts', (req, res) => {
+app.post('/api/posts', verifyToken, (req, res) => {
     res.json({
         message: "Post created"
     })
@@ -32,6 +32,22 @@ app.post('/api/login', (req, res) => {
         })
     })
 })
+// Token Format
+// authorization : Bearer <access token>
+
+
+
+// Verify Token func
+function verifyToken(req, res, next) {
+    const bearerHeader = req.headers['authorization'];
+    // Check if bearer is undefined
+    if (typeof bearerHeader == !undefined) {
+
+    } else {
+        //Forbidden
+        res.sendStatus(403)
+    }
+}
 
 
 app.listen(5000, () => console.log("Server startet at 5000"))
